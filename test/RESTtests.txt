@@ -1,0 +1,140 @@
+
+Instructions and data for tests of REST interface.
+One test consists of the URL to test, the request type, the request body and
+the expected reply from the server. The requests can be executed with a tool
+like postman.
+
+###########################################################################
+interviewer/add
+POST
+{
+  "email":"new@interviewer.de",
+  "first_name":"new",
+  "last_name":"interviewer"
+}
+  ==> newly created interviewer with id 6
+
+POST
+{
+  "email":"new@interviewer.de",
+  "first_name":"new",
+  last_name":"interviewer"
+}
+  ==> email already exists error
+
+POST
+{
+  "email":"new@interviewer.de",
+  "first_name":"new",
+}
+  ==> missing argument error
+
+
+###########################################################################
+interviewer/<id>
+GET /6
+
+  ==> The previously created interviewer
+
+PUT /6 --> GET /6
+{
+  "availability":"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+}
+
+DELETE /6
+
+  ==> success message
+
+DELETE /6; GET /6
+
+  ==> interviewer does not exist error
+
+
+###########################################################################
+interviewers
+GET
+
+ ==> a list of all interviewers in the database
+
+
+###########################################################################
+interviewee/add
+POST
+{
+  "email":"new@interviewee.de"
+  "first_name":"new",
+  "last_name":"interviewee"
+}
+
+  ==> the newly created interviewee
+
+
+###########################################################################
+interviewee/<id>
+GET /6
+
+  ==> The previously created interviewee
+
+PUT /6 --> GET /6
+{
+  "availability":"000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+}
+
+DELETE /6
+
+  ==> success message
+
+DELETE /6; GET /6
+
+  ==> interviewer does not exist error
+
+
+###########################################################################
+interviewees
+GET
+
+  ==> list of all interviewees in the database
+
+###########################################################################
+availability
+POST
+{
+	"interviewee_email":"fh.available@interviewee.de",
+	"interviewer_emails":["fh.available@interviewer.de", "a.available@interviewer.de", "fb.available@interviewer.de"]
+}
+ ==> first time slot only
+
+{
+	"interviewee_email":"n.available@interviewee.de",
+	"interviewer_emails":["fh.available@interviewer.de", "a.available@interviewer.de", "fb.available@interviewer.de"]
+}
+  ==> no time slot
+
+{
+	"interviewee_email":"a.available@interviewee.de",
+	"interviewer_emails":["fh.available@interviewer.de", "a.available@interviewer.de"]
+}
+  ==> first half of week
+
+{
+	"interviewee_email":"a.available@interviewee.de",
+	"interviewer_emails":["not.existing@interviewer.de", "a.available@interviewer.de", "fb.available@interviewer.de"]
+}
+  ==> interviewer does not exist
+
+PUT interviewer/add
+{
+  "email":"no.availability@interviewer.de",
+  "first_name":"no",
+  "last_name":"availability"
+}
+
+  ==> the newly created interviewer
+
+POST availability
+{
+	"interviewee_email":"a.available@interviewee.de",
+	"interviewer_emails":["no.availability@interviewer.de", "a.available@interviewer.de", "fb.available@interviewer.de"]
+}
+
+  ==> missing availability information
