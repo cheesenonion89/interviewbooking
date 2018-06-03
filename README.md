@@ -39,8 +39,8 @@ are listed. Data for testing the REST funtionality can be found in test/RESTtest
 
 ## /interviewer/new & interviewee/new
 ### POST
-* Creation of a new interviewer/interviwee
-* Expects a json object containing the first name, last name and email address of a new interviewer/interviewee. The avalability is optional.
+* Creation of a new interviewer/interviewee
+* Expects a json object containing the first name, last name and email address of a new interviewer/interviewee. The availability is optional.
 
 ## /interviewer/<id> & interviewee/<id>
 ### GET
